@@ -15,7 +15,8 @@ import os.path
 
 # Location of variables we don't want published on Github
 from private.config import port_number, bot_id, spreadsheet_shortlink
-from private.config import destination_sheetname_range, record_format
+from private.config import destination_sheetname, destination_table_corner
+from private.config import record_format
 from private.config import server_timezone, desired_timezone
 from private.config import bot_post_url
 
@@ -28,6 +29,44 @@ LOG_FILENAME_TEMPLATE = "%Y-%m-%d_%H-%M-%S_server_log.out"
 LOG_FORMAT = "%(asctime)s %(levelname)-8s %(message)s"
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
+<<<<<<< HEAD
+=======
+def record_chores(chore_list):
+    "Accept a list of dicts containing post_data and the return_val from parser.parse"
+    # make a deep copy in order not to edit the one that was passed
+    chore_list = chore_list[:]
+
+    for chore in chore_list:
+        # We'll use `post_data` to fill in the data we'll send to
+        # the spreadsheet, so add the timestamp in there too
+        chore["post_data"]["local_timestamp"] = parser.convert_unix_timestamp(
+            chore["post_data"]["created_at"])
+     
+        # We'll use `post_data` to fill in the row to be
+        # sent to the spreadsheet, so get the time and rooms
+        # the parser found and add them in.
+        chore["post_data"]["time"] = chore["return_val"]["time"]
+        chore["post_data"]["rooms"] = chore["return_val"]["rooms"]
+
+    # should be a list of lists (i.e. two-dimensional)
+    # the outer dimension is the row; inner, column.
+    # `var` should be formattable strings specifying keys
+    # in post_data to fill in, e.g. "{text}" to fill in
+    # the message.
+    # `record_format` should be a list of those, i.e.,
+    # what row should the bot add to the spreadsheet?
+    values = [[var.format(**chore["post_data"]) for var in record_format]
+              for chore in chore_list]
+    
+    # Write to the sheet. Log the summary of what happened
+    response = gsheet.write(destination_sheetname + "!" +
+                            destination_table_corner, values)
+    return response
+
+def record_chore(post_data, return_val):
+    return record_chores([{"post_data": post_data, "return_val": return_val}])
+
+>>>>>>> 83ad0cf... Made groupy_hack.py go through all chores since last one entered
 class ChoreMeRequestHandler(BaseHTTPRequestHandler):
     """Instantiated each time the server receives a request."""
 
