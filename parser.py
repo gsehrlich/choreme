@@ -11,7 +11,7 @@ hashtag_pattern = r"#\w*chore\w*"
 time_pattern = r"([0-9]+) min"
 
 # The place where we store info we don't want published on Github
-_private_info_dir = "../private"
+_private_info_dir = "private"
 
 # Check whether we're running Python from the right directory.
 # We need to be able to find the private folder from here.

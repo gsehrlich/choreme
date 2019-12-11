@@ -29,8 +29,6 @@ LOG_FILENAME_TEMPLATE = "%Y-%m-%d_%H-%M-%S_server_log.out"
 LOG_FORMAT = "%(asctime)s %(levelname)-8s %(message)s"
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-<<<<<<< HEAD
-=======
 def record_chores(chore_list):
     "Accept a list of dicts containing post_data and the return_val from parser.parse"
     # make a deep copy in order not to edit the one that was passed
@@ -66,7 +64,6 @@ def record_chores(chore_list):
 def record_chore(post_data, return_val):
     return record_chores([{"post_data": post_data, "return_val": return_val}])
 
->>>>>>> 83ad0cf... Made groupy_hack.py go through all chores since last one entered
 class ChoreMeRequestHandler(BaseHTTPRequestHandler):
     """Instantiated each time the server receives a request."""
 
